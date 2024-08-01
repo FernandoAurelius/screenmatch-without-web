@@ -13,6 +13,6 @@ public class ScreenmatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		System.out.println("Primeiro projeto Spring sem Web");
+		System.out.println("First project Spring without Web!");
 	}
 }

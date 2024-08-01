@@ -12,7 +12,7 @@
 	<artifactId>screenmatch</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>screenmatch</name>
-	<description>Primeiro projeto Spring sem web</description>
+	<description>First project Spring without Web</description>
 	<url/>
 	<licenses>
 		<license/>
