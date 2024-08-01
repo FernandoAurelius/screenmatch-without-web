@@ -1,5 +1,8 @@
 package br.com.floresdev.screenmatch;
 
+import br.com.floresdev.screenmatch.models.SeriesDataModel;
+import br.com.floresdev.screenmatch.services.ApiConsumeService;
+import br.com.floresdev.screenmatch.services.DataConverterService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +16,8 @@ public class ScreenmatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		System.out.println("First project Spring without Web!");
+		String json = ApiConsumeService.getData("https://www.omdbapi.com/?t=game+of+thrones&apikey=fbb24987");
+		SeriesDataModel gameOfThrones = DataConverterService.convertData(json, SeriesDataModel.class);
+		System.out.println(gameOfThrones);
 	}
 }
