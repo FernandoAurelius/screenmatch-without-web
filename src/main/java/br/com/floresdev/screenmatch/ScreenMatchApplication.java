@@ -1,5 +1,6 @@
 package br.com.floresdev.screenmatch;
 
+import br.com.floresdev.screenmatch.application.UserInterface;
 import br.com.floresdev.screenmatch.models.SeasonDataModel;
 import br.com.floresdev.screenmatch.models.SeriesDataModel;
 import br.com.floresdev.screenmatch.services.ApiConsumeService;
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @SpringBootApplication
 public class ScreenMatchApplication implements CommandLineRunner {
@@ -20,18 +22,11 @@ public class ScreenMatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		String json = ApiConsumeService.getData("https://www.omdbapi.com/?t=game+of+thrones&apikey=fbb24987");
-		SeriesDataModel gameOfThrones = DataConverterService.convertData(json, SeriesDataModel.class);
-		System.out.println(gameOfThrones);
-
-		List<SeasonDataModel> seasons = new ArrayList<>();
-		for (int i = 1; i <= gameOfThrones.seasons(); i++) {
-			json = ApiConsumeService.getData(String.format(
-					"https://www.omdbapi.com/?t=game+of+thrones&season=%d&apikey=fbb24987", i
-			));
-			SeasonDataModel seasonData = DataConverterService.convertData(json, SeasonDataModel.class);
-			seasons.add(seasonData);
+		boolean repeat = true;
+		while (repeat) {
+			UserInterface.showMenu();
+			System.out.print("\n\nDo you want to continue (y/n)? ");
+			repeat = Objects.equals(UserInterface.SC.next(), "y");
 		}
-		System.out.println(seasons);
 	}
 }
