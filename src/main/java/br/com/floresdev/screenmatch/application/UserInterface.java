@@ -14,9 +14,9 @@ public class UserInterface {
 
     public static final Scanner SC = new Scanner(System.in);
 
-    private static final String address = "https://www.omdbapi.com/?t=";
+    private static final String ADDRESS = "https://www.omdbapi.com/?t=";
 
-    private static final String apiKey = "&apikey=***REMOVED***";
+    private static final String API_KEY = "&apikey=***REMOVED***";
 
     public static void showMenu() {
         System.out.println("""
@@ -43,7 +43,7 @@ public class UserInterface {
     }
 
     private static String getFullAddress(String seriesName) {
-        return address + seriesName.replace(" ", "+").toLowerCase() + apiKey;
+        return ADDRESS + seriesName.replace(" ", "+").toLowerCase() + API_KEY;
     }
 
     private static String getSeriesName() {
@@ -64,9 +64,9 @@ public class UserInterface {
                 getChosenOption(fullAddress, series);
             }
         } catch (InputMismatchException e) {
-            //System.out.println("Invalid format inputted! Please, enter your choice again, following " +
-           //         "the correct pattern!");
-            //getChosenOption(fullAddress, series);
+            System.out.println("Invalid format inputted! Please, enter your choice again, following " +
+                    "the correct pattern!");
+            getChosenOption(fullAddress, series);
         }
     }
 
