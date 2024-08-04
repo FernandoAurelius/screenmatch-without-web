@@ -1,14 +1,13 @@
 package br.com.floresdev.screenmatch.application;
 
+import br.com.floresdev.screenmatch.models.EpisodeDataModel;
 import br.com.floresdev.screenmatch.models.SeasonDataModel;
 import br.com.floresdev.screenmatch.models.SeriesDataModel;
 import br.com.floresdev.screenmatch.services.ApiConsumeService;
 import br.com.floresdev.screenmatch.services.DataConverterService;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class UserInterface {
 
@@ -31,6 +30,7 @@ public class UserInterface {
                         After entering the series name, you can choose one of the following options of data to be shown:
                         1. Get all seasons of a certain series
                         2. Get all the names of the episodes of a certain season of a series
+                        3. Get top five episodes of a certain series
                         \s
                         Chosen option:\s""");
         getChosenOption(fullAddress, series);
@@ -59,7 +59,10 @@ public class UserInterface {
                 System.out.println(getSeasonsData(fullAddress, series));
             } else if (chosenOption == 2) {
                 getEpisodesNames(getSeasonNumber(), fullAddress);
-            } else {
+            } else if (chosenOption == 3) {
+                getTopFive(getSeasonsData(fullAddress, series)).forEach((d) -> System.out.println(d.title()));
+            }
+            else {
                 System.out.println("Invalid chosen option! Please, follow the correct pattern of choice and try again.");
                 getChosenOption(fullAddress, series);
             }
@@ -103,5 +106,17 @@ public class UserInterface {
     private static String getSeasonAddress(String fullAddress) {
         String[] auxArr = fullAddress.split("&a");
         return auxArr[0] + "&season=()&a" + auxArr[1];
+    }
+
+    private static List<EpisodeDataModel> getTopFive(List<SeasonDataModel> seasons) {
+        List<EpisodeDataModel> auxList = seasons.stream()
+                .flatMap((s) -> s.episodes().stream()
+                        .filter((d) -> !d.rating().equalsIgnoreCase("N/A")))
+                .toList();
+
+        return auxList.stream()
+                .sorted(Comparator.comparing(EpisodeDataModel::rating).reversed())
+                .limit(5)
+                .collect(Collectors.toList());
     }
 }
