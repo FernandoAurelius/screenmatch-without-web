@@ -1,11 +1,13 @@
 package br.com.floresdev.screenmatch.application;
 
-import br.com.floresdev.screenmatch.models.EpisodeDataModel;
+import br.com.floresdev.screenmatch.models.EpisodeModel;
 import br.com.floresdev.screenmatch.models.SeasonDataModel;
 import br.com.floresdev.screenmatch.models.SeriesDataModel;
 import br.com.floresdev.screenmatch.services.ApiConsumeService;
 import br.com.floresdev.screenmatch.services.DataConverterService;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -31,6 +33,7 @@ public class UserInterface {
                         1. Get all seasons of a certain series
                         2. Get all the names of the episodes of a certain season of a series
                         3. Get top five episodes of a certain series
+                        4. View episodes from a certain year
                         \s
                         Chosen option:\s""");
         getChosenOption(fullAddress, series);
@@ -60,7 +63,9 @@ public class UserInterface {
             } else if (chosenOption == 2) {
                 getEpisodesNames(getSeasonNumber(), fullAddress);
             } else if (chosenOption == 3) {
-                getTopFive(getSeasonsData(fullAddress, series)).forEach((d) -> System.out.println(d.title()));
+                getTopFive(getSeasonsData(fullAddress, series)).forEach((d) -> System.out.println(d.getTitle()));
+            } else if (chosenOption == 4){
+                showEpisodesFromYear(getEpisodesFromEpisodesData(getSeasonsData(fullAddress, series)));
             }
             else {
                 System.out.println("Invalid chosen option! Please, follow the correct pattern of choice and try again.");
@@ -89,7 +94,22 @@ public class UserInterface {
         String seasonAddress = getSeasonAddress(fullAddress).replace("()", String.valueOf(seasonNumber));
         String json = ApiConsumeService.getData(seasonAddress);
         SeasonDataModel season = DataConverterService.convertData(json, SeasonDataModel.class);
-        season.episodes().forEach((e) -> System.out.println(e.title()));
+        List<EpisodeModel> episodes = getEpisodesFromEpisodesData(season);
+        episodes.forEach(e -> System.out.println(e.getTitle()));
+    }
+
+    private static List<EpisodeModel> getEpisodesFromEpisodesData(List<SeasonDataModel> seasons) {
+        return seasons.stream()
+                .flatMap(t -> t.episodes().stream()
+                        .filter(d -> !d.rating().equalsIgnoreCase("N/A"))
+                        .map((d) -> new EpisodeModel(t.number(), d))
+                ).collect(Collectors.toList());
+    }
+
+    private static List<EpisodeModel> getEpisodesFromEpisodesData(SeasonDataModel season) {
+        return season.episodes().stream()
+                .map(e -> new EpisodeModel(season.number(), e))
+                .collect(Collectors.toList());
     }
 
     private static List<SeasonDataModel> getSeasonsData(String fullAddress, SeriesDataModel series) {
@@ -108,15 +128,31 @@ public class UserInterface {
         return auxArr[0] + "&season=()&a" + auxArr[1];
     }
 
-    private static List<EpisodeDataModel> getTopFive(List<SeasonDataModel> seasons) {
-        List<EpisodeDataModel> auxList = seasons.stream()
-                .flatMap((s) -> s.episodes().stream()
-                        .filter((d) -> !d.rating().equalsIgnoreCase("N/A")))
-                .toList();
+    private static List<EpisodeModel> getTopFive(List<SeasonDataModel> seasons) {
+        List<EpisodeModel> auxList = getEpisodesFromEpisodesData(seasons);
 
         return auxList.stream()
-                .sorted(Comparator.comparing(EpisodeDataModel::rating).reversed())
+                .sorted(Comparator.comparing(EpisodeModel::getRating).reversed())
                 .limit(5)
                 .collect(Collectors.toList());
+    }
+
+    private static LocalDate getSearchYear() {
+        System.out.print("What year do you want to view the episodes from? ");
+        int year = SC.nextInt();
+        return LocalDate.of(year, 1, 1);
+    }
+
+    private static void showEpisodesFromYear(List<EpisodeModel> episodes) {
+        LocalDate searchYear = getSearchYear();
+        episodes.stream()
+                .filter(e -> e.getReleaseDate() != null && e.getReleaseDate().isAfter(searchYear))
+                .forEach(e -> System.out.printf("""
+                        Season: %d
+                        Episode number: %d
+                        Episode title: %s
+                        Release date: %s
+                        """, e.getSeason(), e.getEpisodeNumber(), e.getTitle(),
+                        e.getReleaseDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
     }
 }
