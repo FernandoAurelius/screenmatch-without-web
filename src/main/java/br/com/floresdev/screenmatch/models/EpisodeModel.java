@@ -5,11 +5,11 @@ import java.time.format.DateTimeParseException;
 
 public class EpisodeModel {
 
-    private Number season;
+    private final Number season;
 
-    private String title;
+    private final String title;
 
-    private Integer episodeNumber;
+    private final Integer episodeNumber;
 
     private Double rating;
 
