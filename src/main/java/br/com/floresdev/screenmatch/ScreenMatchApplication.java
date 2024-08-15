@@ -1,11 +1,13 @@
 package br.com.floresdev.screenmatch;
 
+import br.com.floresdev.screenmatch.application.UserInteraction;
 import br.com.floresdev.screenmatch.application.UserInterface;
+import br.com.floresdev.screenmatch.services.DisplayService;
+import br.com.floresdev.screenmatch.services.SeasonService;
+import br.com.floresdev.screenmatch.services.SeriesService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.Objects;
 
 @SpringBootApplication
 public class ScreenMatchApplication implements CommandLineRunner {
@@ -16,11 +18,12 @@ public class ScreenMatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		boolean repeat = true;
-		while (repeat) {
-			UserInterface.showMenu();
-			System.out.print("\n\nDo you want to continue (y/n)? ");
-			repeat = Objects.equals(UserInterface.SC.next(), "y");
+		String repeat = "y";
+		while (repeat.equals("y")) {
+			final UserInterface UI = new UserInterface(new UserInteraction(), new SeriesService(), new SeasonService(),
+					new DisplayService());
+			UI.start();
+			repeat = UI.getUserInteraction().getRepetitionValue();
 		}
 	}
 }
