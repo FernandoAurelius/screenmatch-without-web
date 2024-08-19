@@ -7,6 +7,10 @@ import java.util.Scanner;
 public class UserInteraction {
     private final Scanner SC = new Scanner(System.in);
 
+    public String getNextLine() {
+        return SC.nextLine();
+    }
+
     public String getSeriesName() {
         System.out.print("Enter the series name: ");
         return SC.next();
@@ -17,7 +21,6 @@ public class UserInteraction {
         try {
             System.out.print("Chosen option: ");
             int chosenOption = SC.nextInt();
-            SC.nextLine();
             return chosenOption;
         } catch (InputMismatchException e) {
             System.out.println("Invalid format inputted! Please, enter your choice again, following " +
