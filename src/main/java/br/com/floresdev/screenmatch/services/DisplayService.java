@@ -6,6 +6,7 @@ import br.com.floresdev.screenmatch.models.SeasonDataModel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class DisplayService {
@@ -22,6 +23,7 @@ public class DisplayService {
                 3. Get top five episodes of a certain series
                 4. View episodes from a certain year
                 5. Search for an episode by its title
+                6. View rating of all seasons of a certain series
                 \s
                 """);
     }
@@ -48,12 +50,19 @@ public class DisplayService {
                         + "\nRelease date: " + e.getReleaseDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
     }
 
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public void showEpisodeByTitle(Optional<EpisodeModel> episodeContainer) {
         if (episodeContainer.isPresent()) {
             System.out.println("First occurrence of the title is: " + episodeContainer.get().getTitle() + ", season: " +
                     episodeContainer.get().getSeason());
         } else {
             System.out.println("Episode not found!");
+        }
+    }
+
+    public void showRatingsPerSeason(Map<Number, Double> ratingsPerSeason) {
+        for (Map.Entry<Number, Double> map : ratingsPerSeason.entrySet()) {
+            System.out.println(String.format("Season: " + map.getKey() + " | Rating: %.2f", map.getValue()));
         }
     }
 

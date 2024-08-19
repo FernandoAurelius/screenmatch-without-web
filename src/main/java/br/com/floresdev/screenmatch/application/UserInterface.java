@@ -4,6 +4,7 @@ import br.com.floresdev.screenmatch.models.EpisodeModel;
 import br.com.floresdev.screenmatch.models.SeasonDataModel;
 import br.com.floresdev.screenmatch.models.SeriesDataModel;
 import br.com.floresdev.screenmatch.services.DisplayService;
+import br.com.floresdev.screenmatch.services.EpisodeService;
 import br.com.floresdev.screenmatch.services.SeasonService;
 import br.com.floresdev.screenmatch.services.SeriesService;
 
@@ -174,14 +175,16 @@ public class UserInterface {
     private final UserInteraction userInteraction;
     private final SeriesService seriesService;
     private final SeasonService seasonService;
+    private final EpisodeService episodeService;
     private final DisplayService displayService;
 
     public UserInterface(UserInteraction userInteraction, SeriesService seriesService,
-                         SeasonService seasonService, DisplayService displayService) {
+                         SeasonService seasonService, EpisodeService episodeService, DisplayService displayService) {
         this.userInteraction = userInteraction;
         this.seriesService = seriesService;
         this.seasonService = seasonService;
         this.displayService = displayService;
+        this.episodeService = episodeService;
     }
 
     public void start() {
@@ -201,23 +204,28 @@ public class UserInterface {
             case 2:
                 int seasonNumber = userInteraction.getSeasonNumber();
 
-                List<EpisodeModel> episodes = seasonService.getEpisodesNames(seasonNumber, fullAddress);
+                List<EpisodeModel> episodes = episodeService.getEpisodesNames(seasonNumber, fullAddress);
                 displayService.showEpisodesNames(episodes);
                 break;
             case 3:
-                displayService.showTopFiveEpisodes(seasonService.getTopFive(seasonService.getSeasons(series,
+                displayService.showTopFiveEpisodes(episodeService.getTopFiveEpisodes(seasonService.getSeasons(series,
                         fullAddress)));
                 break;
             case 4:
-                displayService.showEpisodesFromYear(seasonService.getEpisodesFromEpisodesData(
+                displayService.showEpisodesFromYear(episodeService.getEpisodesFromEpisodesData(
                         seasonService.getSeasons(series, fullAddress)), userInteraction.getSearchYear());
                 break;
             case 5:
                 displayService.showEpisodeByTitle(
-                        seasonService.getEpisodeByTitle(
-                            seasonService.getEpisodesFromEpisodesData(seasonService.getSeasons(series, fullAddress)),
+                        episodeService.getEpisodeByTitle(
+                            episodeService.getEpisodesFromEpisodesData(seasonService.getSeasons(series, fullAddress)),
                             userInteraction.getEpisodeTitle())
                 );
+                break;
+            case 6:
+                displayService.showRatingsPerSeason(episodeService.getRatingsPerSeason(
+                        episodeService.getEpisodesFromEpisodesData(seasonService.getSeasons(series, fullAddress))
+                ));
                 break;
             default:
                 System.out.println("Invalid chosen option! Please, follow the correct pattern of choice and " +

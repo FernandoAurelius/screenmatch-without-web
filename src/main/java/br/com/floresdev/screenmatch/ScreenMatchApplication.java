@@ -3,6 +3,7 @@ package br.com.floresdev.screenmatch;
 import br.com.floresdev.screenmatch.application.UserInteraction;
 import br.com.floresdev.screenmatch.application.UserInterface;
 import br.com.floresdev.screenmatch.services.DisplayService;
+import br.com.floresdev.screenmatch.services.EpisodeService;
 import br.com.floresdev.screenmatch.services.SeasonService;
 import br.com.floresdev.screenmatch.services.SeriesService;
 import org.springframework.boot.CommandLineRunner;
@@ -21,8 +22,9 @@ public class ScreenMatchApplication implements CommandLineRunner {
 		String repeat = "y";
 		while (repeat.equals("y")) {
 			final UserInterface UI = new UserInterface(new UserInteraction(), new SeriesService(), new SeasonService(),
-					new DisplayService());
+					new EpisodeService(), new DisplayService());
 			UI.start();
+			UI.getUserInteraction().getNextLine();
 			repeat = UI.getUserInteraction().getRepetitionValue();
 		}
 	}
