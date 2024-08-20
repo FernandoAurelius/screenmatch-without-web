@@ -3,10 +3,7 @@ package br.com.floresdev.screenmatch.services;
 import br.com.floresdev.screenmatch.models.EpisodeModel;
 import br.com.floresdev.screenmatch.models.SeasonDataModel;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class EpisodeService {
@@ -55,6 +52,12 @@ public class EpisodeService {
                 .filter(e -> e.getRating() > 0.0)
                 .collect(Collectors.groupingBy(EpisodeModel::getSeason,
                         Collectors.averagingDouble(EpisodeModel::getRating)));
+    }
+
+    public DoubleSummaryStatistics getStats(List<EpisodeModel> episodes) {
+        return episodes.stream()
+                .filter(e -> e.getRating() > 0.0)
+                .collect(Collectors.summarizingDouble(EpisodeModel::getRating));
     }
 
 }
