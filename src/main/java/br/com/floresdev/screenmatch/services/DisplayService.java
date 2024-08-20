@@ -5,6 +5,7 @@ import br.com.floresdev.screenmatch.models.SeasonDataModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,6 +25,7 @@ public class DisplayService {
                 4. View episodes from a certain year
                 5. Search for an episode by its title
                 6. View rating of all seasons of a certain series
+                7. View general statistics of a certain series
                 \s
                 """);
     }
@@ -62,8 +64,13 @@ public class DisplayService {
 
     public void showRatingsPerSeason(Map<Number, Double> ratingsPerSeason) {
         for (Map.Entry<Number, Double> map : ratingsPerSeason.entrySet()) {
-            System.out.println(String.format("Season: " + map.getKey() + " | Rating: %.2f", map.getValue()));
+            System.out.printf("Season: " + map.getKey() + " | Rating: %.2f%n", map.getValue());
         }
+    }
+
+    public void showStats(DoubleSummaryStatistics stats) {
+        System.out.printf("Analyzed episodes: " + stats.getCount() + "\nAverage rating: %.2f" +
+        "\nBest rating: " + stats.getMax() + "\nWorse rating: " + stats.getMin(), stats.getAverage());
     }
 
 }
