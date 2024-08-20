@@ -1,107 +1,87 @@
 package br.com.floresdev.screenmatch.application;
 
+import br.com.floresdev.screenmatch.models.EpisodeModel;
 import br.com.floresdev.screenmatch.models.SeasonDataModel;
 import br.com.floresdev.screenmatch.models.SeriesDataModel;
-import br.com.floresdev.screenmatch.services.ApiConsumeService;
-import br.com.floresdev.screenmatch.services.DataConverterService;
+import br.com.floresdev.screenmatch.services.DisplayService;
+import br.com.floresdev.screenmatch.services.EpisodeService;
+import br.com.floresdev.screenmatch.services.SeasonService;
+import br.com.floresdev.screenmatch.services.SeriesService;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
 
 public class UserInterface {
 
-    public static final Scanner SC = new Scanner(System.in);
+    private final UserInteraction userInteraction;
+    private final SeriesService seriesService;
+    private final SeasonService seasonService;
+    private final EpisodeService episodeService;
+    private final DisplayService displayService;
 
-    private static final String ADDRESS = "https://www.omdbapi.com/?t=";
-
-    private static final String API_KEY = "&apikey=fbb24987";
-
-    public static void showMenu() {
-        System.out.println("""
-                Welcome to the Commandline Interface of ScreenMatch!
-                We hope you enjoy searching for data about your favorite series or movies!
-                In the following message, you must enter the name of the series you want to know more about it.
-                """);
-        String seriesName = getSeriesName();
-        String fullAddress = getFullAddress(seriesName);
-        SeriesDataModel series = getSeriesFromName(seriesName);
-        System.out.print("""
-                        After entering the series name, you can choose one of the following options of data to be shown:
-                        1. Get all seasons of a certain series
-                        2. Get all the names of the episodes of a certain season of a series
-                        \s
-                        Chosen option:\s""");
-        getChosenOption(fullAddress, series);
+    public UserInterface(UserInteraction userInteraction, SeriesService seriesService,
+                         SeasonService seasonService, EpisodeService episodeService, DisplayService displayService) {
+        this.userInteraction = userInteraction;
+        this.seriesService = seriesService;
+        this.seasonService = seasonService;
+        this.displayService = displayService;
+        this.episodeService = episodeService;
     }
 
-    private static SeriesDataModel getSeriesFromName(String seriesName) {
-        String fullAddress = getFullAddress(seriesName);
-        String json = ApiConsumeService.getData(fullAddress);
-        return DataConverterService.convertData(json, SeriesDataModel.class);
-    }
+    public void start() {
+        displayService.showMenu();
 
-    private static String getFullAddress(String seriesName) {
-        return ADDRESS + seriesName.replace(" ", "+").toLowerCase() + API_KEY;
-    }
+        String seriesName = userInteraction.getSeriesName();
+        SeriesDataModel series = seriesService.getSeriesByName(seriesName);
+        String fullAddress = seriesService.getFullAddress(seriesName);
 
-    private static String getSeriesName() {
-        System.out.print("Enter the series name: ");
-        return SC.next();
-    }
+        int chosenOption = userInteraction.getChosenOption();
 
-    private static void getChosenOption(String fullAddress, SeriesDataModel series) {
-        try {
-            SC.nextLine();
-            int chosenOption = SC.nextInt();
-            if (chosenOption == 1) {
-                System.out.println(getSeasonsData(fullAddress, series));
-            } else if (chosenOption == 2) {
-                getEpisodesNames(getSeasonNumber(), fullAddress);
-            } else {
-                System.out.println("Invalid chosen option! Please, follow the correct pattern of choice and try again.");
-                getChosenOption(fullAddress, series);
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid format inputted! Please, enter your choice again, following " +
-                    "the correct pattern!");
-            getChosenOption(fullAddress, series);
+        switch (chosenOption) {
+            case 1:
+                List<SeasonDataModel> seasons = seasonService.getSeasons(series, fullAddress);
+                displayService.showSeasons(seasons);
+                break;
+            case 2:
+                int seasonNumber = userInteraction.getSeasonNumber();
+
+                List<EpisodeModel> episodes = episodeService.getEpisodesNames(seasonNumber, fullAddress);
+                displayService.showEpisodesNames(episodes);
+                break;
+            case 3:
+                displayService.showTopFiveEpisodes(episodeService.getTopFiveEpisodes(seasonService.getSeasons(series,
+                        fullAddress)));
+                break;
+            case 4:
+                displayService.showEpisodesFromYear(episodeService.getEpisodesFromEpisodesData(
+                        seasonService.getSeasons(series, fullAddress)), userInteraction.getSearchYear());
+                break;
+            case 5:
+                displayService.showEpisodeByTitle(
+                        episodeService.getEpisodeByTitle(
+                            episodeService.getEpisodesFromEpisodesData(seasonService.getSeasons(series, fullAddress)),
+                            userInteraction.getEpisodeTitle())
+                );
+                break;
+            case 6:
+                displayService.showRatingsPerSeason(episodeService.getRatingsPerSeason(
+                        episodeService.getEpisodesFromEpisodesData(seasonService.getSeasons(series, fullAddress))
+                ));
+                break;
+            case 7:
+                displayService.showStats(episodeService.getStats(
+                        episodeService.getEpisodesFromEpisodesData(
+                        seasonService.getSeasons(series, fullAddress)
+                        ))
+                );
+                break;
+            default:
+                System.out.println("Invalid chosen option! Please, follow the correct pattern of choice and " +
+                        "try again.");
+                start();
         }
     }
 
-    private static int getSeasonNumber() {
-        try {
-            System.out.print("Enter the season number, please: ");
-            return SC.nextInt();
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid format inputted! Please, enter your choice again, following " +
-                    "the correct pattern!");
-            getSeasonNumber();
-        }
-        return 0;
-    }
-
-    private static void getEpisodesNames(int seasonNumber, String fullAddress) {
-        String seasonAddress = getSeasonAddress(fullAddress).replace("()", String.valueOf(seasonNumber));
-        String json = ApiConsumeService.getData(seasonAddress);
-        SeasonDataModel season = DataConverterService.convertData(json, SeasonDataModel.class);
-        season.episodes().forEach((e) -> System.out.println(e.title()));
-    }
-
-    private static List<SeasonDataModel> getSeasonsData(String fullAddress, SeriesDataModel series) {
-        List<SeasonDataModel> seasons = new ArrayList<>();
-        String seasonAddress = getSeasonAddress(fullAddress);
-        for (int i = 1; i <= series.seasons(); i++) {
-            String json = ApiConsumeService.getData(seasonAddress.replace("()", String.valueOf(i)));
-            SeasonDataModel seasonData = DataConverterService.convertData(json, SeasonDataModel.class);
-            seasons.add(seasonData);
-        }
-        return seasons;
-    }
-
-    private static String getSeasonAddress(String fullAddress) {
-        String[] auxArr = fullAddress.split("&a");
-        return auxArr[0] + "&season=()&a" + auxArr[1];
+    public UserInteraction getUserInteraction() {
+        return userInteraction;
     }
 }
