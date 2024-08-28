@@ -28,15 +28,14 @@ public class UserInterface {
     }
 
     public void start() {
-        displayService.showMenu();
-
-        String seriesName = userInteraction.getSeriesName();
-        SeriesDataModel series = seriesService.getSeriesByName(seriesName);
-        String fullAddress = seriesService.getFullAddress(seriesName);
-
         String repeat = "y";
         while (repeat.equals("y")) {
             displayService.showMenu();
+
+            String seriesName = userInteraction.getSeriesName();
+            SeriesDataModel series = seriesService.getSeriesByName(seriesName);
+            String fullAddress = seriesService.getFullAddress(seriesName);
+
             int chosenOption = userInteraction.getChosenOption();
             switch (chosenOption) {
                 case 1:
@@ -76,11 +75,13 @@ public class UserInterface {
                             ))
                     );
                     break;
+                case 8:
+                    displayService.showTotalSeries(seriesService.getTotalSeries());
+                    break;
                 default:
                     System.out.println("Invalid chosen option! Please, follow the correct pattern of choice and " +
                             "try again.");
                     start();
-
             }
             repeat = userInteraction.getRepetitionValue();
         }

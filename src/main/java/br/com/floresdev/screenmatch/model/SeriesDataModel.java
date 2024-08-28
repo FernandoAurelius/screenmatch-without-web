@@ -12,7 +12,7 @@ public record SeriesDataModel(@JsonAlias("Title") String title, @JsonAlias("Year
     @Override
     public String toString() {
         return String.format("""
-                Title: %s,
+                ------ SERIES TITLE: %s ------
                 Years in Activity: %s,
                 Episode runtime: %s,
                 Genre: "%s",
