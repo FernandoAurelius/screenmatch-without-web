@@ -19,12 +19,8 @@ public class ScreenMatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		String repeat = "y";
-		while (repeat.equals("y")) {
-			final UserInterface UI = new UserInterface(new UserInteraction(), new SeriesService(), new SeasonService(),
-					new EpisodeService(), new DisplayService());
-			UI.start();
-			repeat = UI.getUserInteraction().getRepetitionValue();
-		}
+		final UserInterface UI = new UserInterface(new UserInteraction(), new SeriesService(), new SeasonService(),
+				new EpisodeService(), new DisplayService());
+		UI.start();
 	}
 }
