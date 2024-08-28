@@ -2,6 +2,7 @@ package br.com.floresdev.screenmatch.service;
 
 import br.com.floresdev.screenmatch.model.EpisodeModel;
 import br.com.floresdev.screenmatch.model.SeasonDataModel;
+import br.com.floresdev.screenmatch.model.SeriesDataModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -26,6 +27,7 @@ public class DisplayService {
                 5. Search for an episode by its title
                 6. View rating of all seasons of a certain series
                 7. View general statistics of a certain series
+                8. View total series queried at the moment
                 \s
                 """);
     }
@@ -73,4 +75,7 @@ public class DisplayService {
         "\nBest rating: " + stats.getMax() + "\nWorse rating: " + stats.getMin(), stats.getAverage());
     }
 
+    public void showTotalSeries(List<SeriesDataModel> totalSeries) {
+        totalSeries.forEach(System.out::println);
+    }
 }
