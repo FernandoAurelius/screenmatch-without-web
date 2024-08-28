@@ -21,7 +21,8 @@ public class SeriesService {
     }
 
     public String getFullAddress(String seriesName) { // SeriesService
-        return ADDRESS + seriesName.replace(" ", "+").toLowerCase() + API_KEY;
+        String plotAddress = "&plot=full";
+        return ADDRESS + seriesName.replace(" ", "+").toLowerCase() + plotAddress + API_KEY;
     }
 
     public List<SeriesDataModel> getTotalSeries() {
