@@ -13,14 +13,14 @@ public class UserInteraction {
 
     public String getSeriesName() {
         System.out.print("Enter the series name: ");
-        return SC.next();
+        return SC.nextLine();
     }
 
     public Integer getChosenOption() {
-        SC.nextLine();
         try {
             System.out.print("Chosen option: ");
             int chosenOption = SC.nextInt();
+            getNextLine();
             return chosenOption;
         } catch (InputMismatchException e) {
             System.out.println("Invalid format inputted! Please, enter your choice again, following " +

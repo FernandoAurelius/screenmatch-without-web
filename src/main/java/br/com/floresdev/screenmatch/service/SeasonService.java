@@ -1,7 +1,7 @@
-package br.com.floresdev.screenmatch.services;
+package br.com.floresdev.screenmatch.service;
 
-import br.com.floresdev.screenmatch.models.SeasonDataModel;
-import br.com.floresdev.screenmatch.models.SeriesDataModel;
+import br.com.floresdev.screenmatch.model.SeasonDataModel;
+import br.com.floresdev.screenmatch.model.SeriesDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
