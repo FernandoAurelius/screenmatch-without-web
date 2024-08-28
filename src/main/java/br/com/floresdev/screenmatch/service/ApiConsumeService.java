@@ -1,4 +1,4 @@
-package br.com.floresdev.screenmatch.services;
+package br.com.floresdev.screenmatch.service;
 
 import java.io.IOException;
 import java.net.URI;

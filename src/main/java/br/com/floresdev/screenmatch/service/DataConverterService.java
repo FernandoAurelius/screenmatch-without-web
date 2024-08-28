@@ -1,4 +1,4 @@
-package br.com.floresdev.screenmatch.services;
+package br.com.floresdev.screenmatch.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,4 +1,4 @@
-package br.com.floresdev.screenmatch.models;
+package br.com.floresdev.screenmatch.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;

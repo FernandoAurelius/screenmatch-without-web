@@ -1,12 +1,12 @@
 package br.com.floresdev.screenmatch.application;
 
-import br.com.floresdev.screenmatch.models.EpisodeModel;
-import br.com.floresdev.screenmatch.models.SeasonDataModel;
-import br.com.floresdev.screenmatch.models.SeriesDataModel;
-import br.com.floresdev.screenmatch.services.DisplayService;
-import br.com.floresdev.screenmatch.services.EpisodeService;
-import br.com.floresdev.screenmatch.services.SeasonService;
-import br.com.floresdev.screenmatch.services.SeriesService;
+import br.com.floresdev.screenmatch.model.EpisodeModel;
+import br.com.floresdev.screenmatch.model.SeasonDataModel;
+import br.com.floresdev.screenmatch.model.SeriesDataModel;
+import br.com.floresdev.screenmatch.service.DisplayService;
+import br.com.floresdev.screenmatch.service.EpisodeService;
+import br.com.floresdev.screenmatch.service.SeasonService;
+import br.com.floresdev.screenmatch.service.SeriesService;
 
 import java.util.List;
 

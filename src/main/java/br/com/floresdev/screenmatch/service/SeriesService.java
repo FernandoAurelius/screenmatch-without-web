@@ -1,6 +1,6 @@
-package br.com.floresdev.screenmatch.services;
+package br.com.floresdev.screenmatch.service;
 
-import br.com.floresdev.screenmatch.models.SeriesDataModel;
+import br.com.floresdev.screenmatch.model.SeriesDataModel;
 
 public class SeriesService {
     private static final String ADDRESS = "https://www.omdbapi.com/?t=";
