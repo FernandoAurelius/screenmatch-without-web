@@ -19,7 +19,10 @@ public record SeriesDataModel(@JsonAlias("Title") String title, @JsonAlias("Year
                 Genre: "%s",
                 Language: %s,
                 Plot: "%s",
-                Rating: %s.
-                """, title, yearsInActivity, runtime, genre, language, plot, rating);
+                Rating: %s,
+                Total seasons: %d,
+                Actors: [%s],
+                Poster: (%s)
+                """, title, yearsInActivity, runtime, genre, language, plot, rating, seasons, actors, posterAddress);
     }
 }
