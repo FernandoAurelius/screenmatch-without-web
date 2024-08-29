@@ -9,20 +9,4 @@ public record SeriesDataModel(@JsonAlias("Title") String title, @JsonAlias("Year
                               @JsonAlias("Language") String language, @JsonAlias("Plot") String plot,
                               @JsonAlias("imdbRating") String rating, @JsonAlias("totalSeasons") int seasons,
                               @JsonAlias("Actors") String actors, @JsonAlias("Poster") String posterAddress) {
-
-    @Override
-    public String toString() {
-        return String.format("""
-                ------ SERIES TITLE: %s ------
-                Years in Activity: %s,
-                Episode runtime: %s,
-                Genre: "%s",
-                Language: %s,
-                Plot: "%s",
-                Rating: %s,
-                Total seasons: %d,
-                Actors: [%s],
-                Poster: (%s)
-                """, title, yearsInActivity, runtime, genre, language, plot, rating, seasons, actors, posterAddress);
-    }
 }
