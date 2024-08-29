@@ -4,16 +4,16 @@ import java.util.OptionalDouble;
 
 public class SeriesModel {
 
-    private String title;
-    private String yearsInActivity;
-    private String runtime;
-    private Category genre;
-    private String language;
-    private String plot;
-    private Double imdbRating;
-    private Integer totalSeasons;
-    private String actors;
-    private String posterAddress;
+    private final String title;
+    private final String yearsInActivity;
+    private final String runtime;
+    private final Category genre;
+    private final String language;
+    private final String plot;
+    private final Double imdbRating;
+    private final Integer totalSeasons;
+    private final String actors;
+    private final String posterAddress;
 
     public SeriesModel(SeriesDataModel series) {
         this.title = series.title();
@@ -22,7 +22,7 @@ public class SeriesModel {
         this.genre = Category.fromString(series.genre().split(",")[0].trim());
         this.language = series.language();
         this.plot = series.plot();
-        this.imdbRating = OptionalDouble.of(Double.valueOf(series.rating())).orElse(0);
+        this.imdbRating = OptionalDouble.of(Double.parseDouble(series.rating())).orElse(0);
         this.totalSeasons = series.seasons();
         this.actors = series.actors();
         this.posterAddress = series.posterAddress();
@@ -43,5 +43,9 @@ public class SeriesModel {
                 Poster: (%s)
                 """, title, yearsInActivity, runtime, genre, language, plot, imdbRating, totalSeasons, actors,
                 posterAddress);
+    }
+
+    public int getTotalSeasons() {
+        return totalSeasons;
     }
 }

@@ -2,7 +2,7 @@ package br.com.floresdev.screenmatch.application;
 
 import br.com.floresdev.screenmatch.model.EpisodeModel;
 import br.com.floresdev.screenmatch.model.SeasonDataModel;
-import br.com.floresdev.screenmatch.model.SeriesDataModel;
+import br.com.floresdev.screenmatch.model.SeriesModel;
 import br.com.floresdev.screenmatch.service.DisplayService;
 import br.com.floresdev.screenmatch.service.EpisodeService;
 import br.com.floresdev.screenmatch.service.SeasonService;
@@ -33,7 +33,7 @@ public class UserInterface {
             displayService.showMenu();
 
             String seriesName = userInteraction.getSeriesName();
-            SeriesDataModel series = seriesService.getSeriesByName(seriesName);
+            SeriesModel series = seriesService.getSeriesBySeriesData(seriesService.getSeriesDataByName(seriesName));
             String fullAddress = seriesService.getFullAddress(seriesName);
 
             int chosenOption = userInteraction.getChosenOption();
