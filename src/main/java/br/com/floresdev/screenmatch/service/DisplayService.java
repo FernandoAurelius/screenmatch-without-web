@@ -3,6 +3,7 @@ package br.com.floresdev.screenmatch.service;
 import br.com.floresdev.screenmatch.model.EpisodeModel;
 import br.com.floresdev.screenmatch.model.SeasonDataModel;
 import br.com.floresdev.screenmatch.model.SeriesDataModel;
+import br.com.floresdev.screenmatch.model.SeriesModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -75,7 +76,7 @@ public class DisplayService {
         "\nBest rating: " + stats.getMax() + "\nWorse rating: " + stats.getMin(), stats.getAverage());
     }
 
-    public void showTotalSeries(List<SeriesDataModel> totalSeries) {
+    public void showTotalSeries(List<SeriesModel> totalSeries) {
         totalSeries.forEach(System.out::println);
     }
 }
