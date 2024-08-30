@@ -79,4 +79,8 @@ public class DisplayService {
     public void showTotalSeries(List<SeriesModel> totalSeries) {
         totalSeries.forEach(System.out::println);
     }
+
+    public void showSeries(SeriesModel series) {
+        System.out.println(series);
+    }
 }

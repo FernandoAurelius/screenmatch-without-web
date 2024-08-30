@@ -67,4 +67,8 @@ public class UserInteraction {
         return repetitionValue;
     }
 
+    public String getTranslationLanguage() {
+        System.out.print("Enter the desired language to translate the plot following ISO pattern (pt, en, es, etc.): ");
+        return SC.next();
+    }
 }
