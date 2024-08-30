@@ -1,19 +1,19 @@
 package br.com.floresdev.screenmatch.service;
 
 import br.com.floresdev.screenmatch.model.SeasonDataModel;
-import br.com.floresdev.screenmatch.model.SeriesDataModel;
+import br.com.floresdev.screenmatch.model.SeriesModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SeasonService {
 
-    public List<SeasonDataModel> getSeasons(SeriesDataModel series, String fullAddress) {
+    public List<SeasonDataModel> getSeasons(SeriesModel series, String fullAddress) {
         List<SeasonDataModel> seasons = new ArrayList<>();
         String seasonAddress = getSeasonAddress(fullAddress);
-        for (int i = 1; i <= series.seasons(); i++) {
-            String json = ApiConsumeService.getData(seasonAddress.replace("()", String.valueOf(i)));
-            SeasonDataModel seasonData = DataConverterService.convertData(json, SeasonDataModel.class);
+        for (int i = 1; i <= series.getTotalSeasons(); i++) {
+            SeasonDataModel seasonData = DataConverterService.convertData(seasonAddress.replace("()",
+                    String.valueOf(i)), SeasonDataModel.class);
             seasons.add(seasonData);
         }
         return seasons;

@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class UserInteraction {
     private final Scanner SC = new Scanner(System.in);
 
-    public String getNextLine() {
-        return SC.nextLine();
+    public void getNextLine() {
+        SC.nextLine();
     }
 
     public String getSeriesName() {
@@ -23,6 +23,7 @@ public class UserInteraction {
             getNextLine();
             return chosenOption;
         } catch (InputMismatchException e) {
+            getNextLine();
             System.out.println("Invalid format inputted! Please, enter your choice again, following " +
                     "the correct pattern!");
             getChosenOption();
@@ -61,7 +62,9 @@ public class UserInteraction {
 
     public String getRepetitionValue() {
         System.out.print("\n\nDo you want to continue (y/n)? ");
-        return SC.next();
+        String repetitionValue = SC.next();
+        getNextLine();
+        return repetitionValue;
     }
 
 }
