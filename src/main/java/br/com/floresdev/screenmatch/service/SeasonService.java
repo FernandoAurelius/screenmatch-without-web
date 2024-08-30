@@ -12,8 +12,8 @@ public class SeasonService {
         List<SeasonDataModel> seasons = new ArrayList<>();
         String seasonAddress = getSeasonAddress(fullAddress);
         for (int i = 1; i <= series.seasons(); i++) {
-            String json = ApiConsumeService.getData(seasonAddress.replace("()", String.valueOf(i)));
-            SeasonDataModel seasonData = DataConverterService.convertData(json, SeasonDataModel.class);
+            SeasonDataModel seasonData = DataConverterService.convertData(seasonAddress.replace("()",
+                    String.valueOf(i)), SeasonDataModel.class);
             seasons.add(seasonData);
         }
         return seasons;
