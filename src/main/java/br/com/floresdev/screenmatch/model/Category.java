@@ -14,11 +14,11 @@ public enum Category {
     }
 
     public static Category fromString(String text) {
-        for (Category categoria : Category.values()) {
-            if (categoria.omdbCategory.equalsIgnoreCase(text)) {
-                return categoria;
+        for (Category category : Category.values()) {
+            if (category.omdbCategory.equalsIgnoreCase(text)) {
+                return category;
             }
         }
-        throw new IllegalArgumentException("Nenhuma categoria encontrada para a string fornecida: " + text);
+        throw new IllegalArgumentException("No category found for received string: " + text);
     }
 }
