@@ -14,8 +14,7 @@ public class SeriesService {
 
     public SeriesDataModel getSeriesByName(String seriesName) { // SeriesService
         String fullAddress = getFullAddress(seriesName);
-        String json = ApiConsumeService.getData(fullAddress);
-        SeriesDataModel series = DataConverterService.convertData(json, SeriesDataModel.class);
+        SeriesDataModel series = DataConverterService.convertData(fullAddress, SeriesDataModel.class);
         totalSeries.add(series);
         return series;
     }

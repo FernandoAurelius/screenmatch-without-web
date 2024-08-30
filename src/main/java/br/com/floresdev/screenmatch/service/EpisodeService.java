@@ -11,9 +11,10 @@ public class EpisodeService {
     private final SeasonService seasonService = new SeasonService();
 
     public List<EpisodeModel> getEpisodesNames(int seasonNumber, String fullAddress) { // SeasonService
-        String seasonAddress = seasonService.getSeasonAddress(fullAddress).replace("()", String.valueOf(seasonNumber));
-        String json = ApiConsumeService.getData(seasonAddress);
-        SeasonDataModel season = DataConverterService.convertData(json, SeasonDataModel.class);
+        String seasonAddress = seasonService.getSeasonAddress(fullAddress).replace("()",
+                String.valueOf(seasonNumber));
+        SeasonDataModel season = DataConverterService.convertData(seasonAddress,
+                SeasonDataModel.class);
         return getEpisodesFromEpisodesData(season);
     }
 
