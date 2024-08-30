@@ -29,6 +29,7 @@ public class DisplayService {
                 6. View rating of all seasons of a certain series
                 7. View general statistics of a certain series
                 8. View total series queried at the moment
+                9. Translate the series plot to a given language
                 \s
                 """);
     }
