@@ -2,7 +2,6 @@ package br.com.floresdev.screenmatch.model;
 
 import br.com.floresdev.screenmatch.service.translate.TranslationService;
 
-import java.io.UnsupportedEncodingException;
 import java.util.OptionalDouble;
 
 public class SeriesModel {
@@ -12,7 +11,7 @@ public class SeriesModel {
     private final String runtime;
     private final Category genre;
     private final String language;
-    private String plot;
+    private final String plot;
     private final Double imdbRating;
     private final Integer totalSeasons;
     private final String actors;
@@ -37,11 +36,7 @@ public class SeriesModel {
         this.runtime = series.getRuntime();
         this.genre = series.getGenre();
         this.language = series.getLanguage();
-        try {
-            this.plot = TranslationService.getTranslation(series.getPlot(), language);
-        } catch (UnsupportedEncodingException e) {
-            this.plot = series.getPlot();
-        }
+        this.plot = TranslationService.getTranslation(series.getPlot(), language);
         this.imdbRating = series.getImdbRating();
         this.totalSeasons = series.getTotalSeasons();
         this.actors = series.getActors();
