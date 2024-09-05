@@ -17,7 +17,6 @@ public class ScreenMatchApplication implements CommandLineRunner {
 		SpringApplication.run(ScreenMatchApplication.class, args);
 	}
 
-	// Testing OpenCommit
 	@Override
 	public void run(String... args) {
 		final UserInterface UI = new UserInterface(new UserInteraction(), new SeriesService(), new SeasonService(),
