@@ -2,13 +2,24 @@ package br.com.floresdev.screenmatch.model;
 
 import br.com.floresdev.screenmatch.service.translate.TranslationService;
 
+import jakarta.persistence.*;
+
 import java.util.OptionalDouble;
 
+@Entity
+@Table(name = "series")
 public class SeriesModel {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true)
     private final String title;
     private final String yearsInActivity;
     private final String runtime;
+
+    @Enumerated(EnumType.STRING)
     private final Category genre;
     private final String language;
     private final String plot;
