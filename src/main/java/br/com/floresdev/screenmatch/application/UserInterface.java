@@ -1,8 +1,8 @@
 package br.com.floresdev.screenmatch.application;
 
-import br.com.floresdev.screenmatch.model.EpisodeModel;
-import br.com.floresdev.screenmatch.model.SeasonDataModel;
-import br.com.floresdev.screenmatch.model.SeriesModel;
+import br.com.floresdev.screenmatch.model.Episode;
+import br.com.floresdev.screenmatch.model.SeasonData;
+import br.com.floresdev.screenmatch.model.Series;
 import br.com.floresdev.screenmatch.service.DisplayService;
 import br.com.floresdev.screenmatch.service.EpisodeService;
 import br.com.floresdev.screenmatch.service.SeasonService;
@@ -33,19 +33,19 @@ public class UserInterface {
             displayService.showMenu();
 
             String seriesName = userInteraction.getSeriesName();
-            SeriesModel series = seriesService.getSeriesByName(seriesName);
+            Series series = seriesService.getSeriesByName(seriesName);
             String fullAddress = seriesService.getFullAddress(seriesName);
 
             int chosenOption = userInteraction.getChosenOption();
             switch (chosenOption) {
                 case 1:
-                    List<SeasonDataModel> seasons = seasonService.getSeasons(series, fullAddress);
+                    List<SeasonData> seasons = seasonService.getSeasons(series, fullAddress);
                     displayService.showSeasons(seasons);
                     break;
                 case 2:
                     int seasonNumber = userInteraction.getSeasonNumber();
 
-                    List<EpisodeModel> episodes = episodeService.getEpisodesNames(seasonNumber, fullAddress);
+                    List<Episode> episodes = episodeService.getEpisodesNames(seasonNumber, fullAddress);
                     displayService.showEpisodesNames(episodes);
                     break;
                 case 3:
@@ -79,7 +79,7 @@ public class UserInterface {
                     displayService.showTotalSeries(seriesService.getTotalSeries());
                     break;
                 case 9:
-                    displayService.showSeries(new SeriesModel(series, userInteraction.getTranslationLanguage()));
+                    displayService.showSeries(new Series(series, userInteraction.getTranslationLanguage()));
                     break;
                 default:
                     System.out.println("Invalid chosen option! Please, follow the correct pattern of choice and " +

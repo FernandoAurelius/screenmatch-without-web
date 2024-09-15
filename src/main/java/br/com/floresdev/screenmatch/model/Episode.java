@@ -3,7 +3,7 @@ package br.com.floresdev.screenmatch.model;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-public class EpisodeModel {
+public class Episode {
 
     private final Number season;
 
@@ -15,7 +15,7 @@ public class EpisodeModel {
 
     private LocalDate releaseDate;
 
-    public EpisodeModel(Integer episodeNumber, EpisodeDataModel episode) {
+    public Episode(Integer episodeNumber, EpisodeData episode) {
         this.season = episodeNumber;
         this.title = episode.title();
         this.episodeNumber = episode.number();

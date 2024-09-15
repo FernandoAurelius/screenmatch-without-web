@@ -9,7 +9,7 @@ import java.util.OptionalDouble;
 
 @Entity
 @Table(name = "series")
-public class SeriesModel {
+public class Series {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +32,9 @@ public class SeriesModel {
     private final String posterAddress;
 
     @Transient
-    private List<EpisodeModel> episodes;
+    private List<Episode> episodes;
 
-    public SeriesModel(SeriesDataModel seriesData) {
+    public Series(SeriesData seriesData) {
         this.title = seriesData.title();
         this.yearsInActivity = seriesData.yearsInActivity();
         this.runtime = seriesData.runtime();
@@ -47,7 +47,7 @@ public class SeriesModel {
         this.posterAddress = seriesData.posterAddress();
     }
 
-    public SeriesModel(SeriesModel series, String language) {
+    public Series(Series series, String language) {
         this.title = series.getTitle();
         this.yearsInActivity = series.getYearsInActivity();
         this.runtime = series.getRuntime();

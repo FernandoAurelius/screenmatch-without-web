@@ -1,9 +1,8 @@
 package br.com.floresdev.screenmatch.service;
 
-import br.com.floresdev.screenmatch.model.EpisodeModel;
-import br.com.floresdev.screenmatch.model.SeasonDataModel;
-import br.com.floresdev.screenmatch.model.SeriesDataModel;
-import br.com.floresdev.screenmatch.model.SeriesModel;
+import br.com.floresdev.screenmatch.model.Episode;
+import br.com.floresdev.screenmatch.model.SeasonData;
+import br.com.floresdev.screenmatch.model.Series;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -34,19 +33,19 @@ public class DisplayService {
                 """);
     }
 
-    public void showSeasons(List<SeasonDataModel> seasons) {
+    public void showSeasons(List<SeasonData> seasons) {
         System.out.println(seasons);
     }
 
-    public void showEpisodesNames(List<EpisodeModel> episodes) {
+    public void showEpisodesNames(List<Episode> episodes) {
         episodes.forEach(e -> System.out.println(e.getTitle()));
     }
 
-    public void showTopFiveEpisodes(List<EpisodeModel> episodes) {
+    public void showTopFiveEpisodes(List<Episode> episodes) {
         episodes.forEach(d -> System.out.printf("%s, season: [" + d.getSeason() + "]\n", d.getTitle()));
     }
 
-    public void showEpisodesFromYear(List<EpisodeModel> episodes, LocalDate searchYear) {
+    public void showEpisodesFromYear(List<Episode> episodes, LocalDate searchYear) {
         episodes.stream()
                 .filter(e -> e.getReleaseDate() != null && e.getReleaseDate().isAfter(searchYear))
                 .forEach(e -> System.out.println(
@@ -57,7 +56,7 @@ public class DisplayService {
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public void showEpisodeByTitle(Optional<EpisodeModel> episodeContainer) {
+    public void showEpisodeByTitle(Optional<Episode> episodeContainer) {
         if (episodeContainer.isPresent()) {
             System.out.println("First occurrence of the title is: " + episodeContainer.get().getTitle() + ", season: " +
                     episodeContainer.get().getSeason());
@@ -77,11 +76,11 @@ public class DisplayService {
         "\nBest rating: " + stats.getMax() + "\nWorse rating: " + stats.getMin(), stats.getAverage());
     }
 
-    public void showTotalSeries(List<SeriesModel> totalSeries) {
+    public void showTotalSeries(List<Series> totalSeries) {
         totalSeries.forEach(System.out::println);
     }
 
-    public void showSeries(SeriesModel series) {
+    public void showSeries(Series series) {
         System.out.println(series);
     }
 }

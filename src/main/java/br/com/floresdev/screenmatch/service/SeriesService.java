@@ -1,7 +1,7 @@
 package br.com.floresdev.screenmatch.service;
 
-import br.com.floresdev.screenmatch.model.SeriesDataModel;
-import br.com.floresdev.screenmatch.model.SeriesModel;
+import br.com.floresdev.screenmatch.model.SeriesData;
+import br.com.floresdev.screenmatch.model.Series;
 import br.com.floresdev.screenmatch.repository.SeriesRepository;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class SeriesService {
     private static final String API_KEY = "&apikey=***REMOVED***";
 
     @SuppressWarnings("FieldMayBeFinal")
-    private List<SeriesModel> totalSeries = new ArrayList<>();
+    private List<Series> totalSeries = new ArrayList<>();
 
     private SeriesRepository repository;
 
@@ -20,9 +20,9 @@ public class SeriesService {
         this.repository = repository;
     }
 
-    public SeriesModel getSeriesByName(String seriesName) { // SeriesService
+    public Series getSeriesByName(String seriesName) { // SeriesService
         String fullAddress = getFullAddress(seriesName);
-        SeriesModel series = new SeriesModel(DataConverterService.convertData(fullAddress, SeriesDataModel.class));
+        Series series = new Series(DataConverterService.convertData(fullAddress, SeriesData.class));
         totalSeries.add(series);
         repository.save(series);
         return series;
@@ -33,7 +33,7 @@ public class SeriesService {
         return ADDRESS + seriesName.replace(" ", "+").toLowerCase() + plotAddress + API_KEY;
     }
 
-    public List<SeriesModel> getTotalSeries() {
+    public List<Series> getTotalSeries() {
         return totalSeries;
     }
 
