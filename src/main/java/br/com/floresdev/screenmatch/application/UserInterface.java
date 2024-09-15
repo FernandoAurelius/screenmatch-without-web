@@ -33,7 +33,7 @@ public class UserInterface {
             displayService.showMenu();
 
             String seriesName = userInteraction.getSeriesName();
-            SeriesModel series = seriesService.getSeriesBySeriesData(seriesService.getSeriesDataByName(seriesName));
+            SeriesModel series = seriesService.getSeriesByName(seriesName);
             String fullAddress = seriesService.getFullAddress(seriesName);
 
             int chosenOption = userInteraction.getChosenOption();

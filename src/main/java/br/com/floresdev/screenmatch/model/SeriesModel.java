@@ -4,6 +4,7 @@ import br.com.floresdev.screenmatch.service.translate.TranslationService;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.OptionalDouble;
 
 @Entity
@@ -22,11 +23,16 @@ public class SeriesModel {
     @Enumerated(EnumType.STRING)
     private final Category genre;
     private final String language;
+
+    @Column(columnDefinition = "TEXT")
     private final String plot;
     private final Double imdbRating;
     private final Integer totalSeasons;
     private final String actors;
     private final String posterAddress;
+
+    @Transient
+    private List<EpisodeModel> episodes;
 
     public SeriesModel(SeriesDataModel seriesData) {
         this.title = seriesData.title();

@@ -2,22 +2,29 @@ package br.com.floresdev.screenmatch.service;
 
 import br.com.floresdev.screenmatch.model.SeriesDataModel;
 import br.com.floresdev.screenmatch.model.SeriesModel;
+import br.com.floresdev.screenmatch.repository.SeriesRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SeriesService {
     private static final String ADDRESS = "https://www.omdbapi.com/?t=";
     private static final String API_KEY = "&apikey=***REMOVED***";
 
     @SuppressWarnings("FieldMayBeFinal")
-    private List<SeriesDataModel> totalSeries = new ArrayList<>();
+    private List<SeriesModel> totalSeries = new ArrayList<>();
 
-    public SeriesDataModel getSeriesDataByName(String seriesName) { // SeriesService
+    private SeriesRepository repository;
+
+    public SeriesService(SeriesRepository repository) {
+        this.repository = repository;
+    }
+
+    public SeriesModel getSeriesByName(String seriesName) { // SeriesService
         String fullAddress = getFullAddress(seriesName);
-        SeriesDataModel series = DataConverterService.convertData(fullAddress, SeriesDataModel.class);
+        SeriesModel series = new SeriesModel(DataConverterService.convertData(fullAddress, SeriesDataModel.class));
         totalSeries.add(series);
+        repository.save(series);
         return series;
     }
 
@@ -27,13 +34,7 @@ public class SeriesService {
     }
 
     public List<SeriesModel> getTotalSeries() {
-        return totalSeries.stream()
-                .map(SeriesModel::new)
-                .collect(Collectors.toList());
-    }
-
-    public SeriesModel getSeriesBySeriesData(SeriesDataModel series) {
-        return new SeriesModel(series);
+        return totalSeries;
     }
 
 }
