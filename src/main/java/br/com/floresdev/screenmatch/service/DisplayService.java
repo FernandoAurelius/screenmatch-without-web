@@ -57,12 +57,14 @@ public class DisplayService {
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public void showEpisodeByTitle(Optional<Episode> episodeContainer) {
-        if (episodeContainer.isPresent()) {
-            System.out.println("First occurrence of the title is: " + episodeContainer.get().getTitle() + ", season: " +
-                    episodeContainer.get().getSeason());
-        } else {
+        if (episodeContainer.isEmpty()) {
             System.out.println("Episode not found!");
+            return;
         }
+        System.out.println("First occurrence of the title is: "
+                + episodeContainer.get().getTitle()
+                + ", season: "
+                + episodeContainer.get().getSeason());
     }
 
     public void showRatingsPerSeason(Map<Number, Double> ratingsPerSeason) {

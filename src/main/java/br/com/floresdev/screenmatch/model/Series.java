@@ -16,23 +16,27 @@ public class Series {
     private Long id;
 
     @Column(unique = true)
-    private final String title;
-    private final String yearsInActivity;
-    private final String runtime;
+    private String title;
+    private String yearsInActivity;
+    private String runtime;
 
     @Enumerated(EnumType.STRING)
-    private final Category genre;
-    private final String language;
+    private Category genre;
+    private String language;
 
     @Column(columnDefinition = "TEXT")
-    private final String plot;
-    private final Double imdbRating;
-    private final Integer totalSeasons;
-    private final String actors;
-    private final String posterAddress;
+    private String plot;
+    private Double imdbRating;
+    private Integer totalSeasons;
+    private String actors;
+    private String posterAddress;
 
     @Transient
     private List<Episode> episodes;
+
+    @SuppressWarnings("unused")
+    public Series() {
+    }
 
     public Series(SeriesData seriesData) {
         this.title = seriesData.title();

@@ -4,7 +4,6 @@ import br.com.floresdev.screenmatch.model.SeriesData;
 import br.com.floresdev.screenmatch.model.Series;
 import br.com.floresdev.screenmatch.repository.SeriesRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SeriesService {
@@ -12,8 +11,6 @@ public class SeriesService {
     private static final String API_KEY = "&apikey=***REMOVED***";
 
     @SuppressWarnings("FieldMayBeFinal")
-    private List<Series> totalSeries = new ArrayList<>();
-
     private SeriesRepository repository;
 
     public SeriesService(SeriesRepository repository) {
@@ -23,7 +20,6 @@ public class SeriesService {
     public Series getSeriesByName(String seriesName) { // SeriesService
         String fullAddress = getFullAddress(seriesName);
         Series series = new Series(DataConverterService.convertData(fullAddress, SeriesData.class));
-        totalSeries.add(series);
         repository.save(series);
         return series;
     }
@@ -34,7 +30,7 @@ public class SeriesService {
     }
 
     public List<Series> getTotalSeries() {
-        return totalSeries;
+        return repository.findAll();
     }
 
 }
