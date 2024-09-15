@@ -55,8 +55,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.***REMOVED***ql</groupId>
-			<artifactId>***REMOVED***ql</artifactId>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 	</dependencies>

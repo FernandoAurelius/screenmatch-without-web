@@ -8,7 +8,7 @@ import java.util.List;
 
 public class SeriesService {
     private static final String ADDRESS = "https://www.omdbapi.com/?t=";
-    private static final String API_KEY = "&apikey=***REMOVED***";
+    private static final String API_KEY = "&apikey=" + System.getenv("OMDB_API_KEY");
 
     @SuppressWarnings("FieldMayBeFinal")
     private SeriesRepository repository;
