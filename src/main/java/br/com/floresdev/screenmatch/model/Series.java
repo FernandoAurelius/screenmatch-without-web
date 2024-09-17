@@ -105,6 +105,10 @@ public class Series {
         return posterAddress;
     }
 
+    public void setEpisodes(List<Episode> episodes) {
+        this.episodes = episodes;
+    }
+
     @Override
     public String toString() {
         return String.format("""

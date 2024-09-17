@@ -3,6 +3,7 @@ package br.com.floresdev.screenmatch.service;
 import br.com.floresdev.screenmatch.model.Episode;
 import br.com.floresdev.screenmatch.model.SeasonData;
 import br.com.floresdev.screenmatch.model.Series;
+import org.aspectj.lang.annotation.After;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,12 +14,29 @@ import java.util.Optional;
 
 public class DisplayService {
 
-    public void showMenu() {
+    public void showMenu(List<Series> totalSeries) {
         System.out.println("""
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 Welcome to the Commandline Interface of ScreenMatch!
                 We hope you enjoy searching for data about your favorite series or movies!
-                In the following message, you must enter the name of the series you want to know more about it.
-                
+                In the following message, you'll see a list of available series to search for.
+                You can either choose an available series to search for, or enter the name of the desired series.
+                """);
+
+        showTotalSeries(totalSeries);
+
+        System.out.println("""
                 After entering the series name, you can choose one of the following options of data to be shown:
                 1. Get all seasons of a certain series
                 2. Get all the names of the episodes of a certain season of a series
@@ -29,7 +47,7 @@ public class DisplayService {
                 7. View general statistics of a certain series
                 8. View total series queried at the moment
                 9. Translate the series plot to a given language
-                \s
+                        
                 """);
     }
 

@@ -9,6 +9,7 @@ import br.com.floresdev.screenmatch.service.SeasonService;
 import br.com.floresdev.screenmatch.service.SeriesService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserInterface {
 
@@ -30,63 +31,79 @@ public class UserInterface {
     public void start() {
         String repeat = "y";
         while (repeat.equals("y")) {
-            displayService.showMenu();
+            List<Series> totalSeries = seriesService.getTotalSeries();
+            displayService.showMenu(totalSeries);
 
             String seriesName = userInteraction.getSeriesName();
-            Series series = seriesService.getSeriesByName(seriesName);
             String fullAddress = seriesService.getFullAddress(seriesName);
+            Series series;
 
-            int chosenOption = userInteraction.getChosenOption();
-            switch (chosenOption) {
-                case 1:
-                    List<SeasonData> seasons = seasonService.getSeasons(series, fullAddress);
-                    displayService.showSeasons(seasons);
-                    break;
-                case 2:
-                    int seasonNumber = userInteraction.getSeasonNumber();
-
-                    List<Episode> episodes = episodeService.getEpisodesNames(seasonNumber, fullAddress);
-                    displayService.showEpisodesNames(episodes);
-                    break;
-                case 3:
-                    displayService.showTopFiveEpisodes(episodeService.getTopFiveEpisodes(seasonService.getSeasons(series,
-                            fullAddress)));
-                    break;
-                case 4:
-                    displayService.showEpisodesFromYear(episodeService.getEpisodesFromEpisodesData(
-                            seasonService.getSeasons(series, fullAddress)), userInteraction.getSearchYear());
-                    break;
-                case 5:
-                    displayService.showEpisodeByTitle(
-                            episodeService.getEpisodeByTitle(
-                                    episodeService.getEpisodesFromEpisodesData(seasonService.getSeasons(series, fullAddress)),
-                                    userInteraction.getEpisodeTitle())
-                    );
-                    break;
-                case 6:
-                    displayService.showRatingsPerSeason(episodeService.getRatingsPerSeason(
-                            episodeService.getEpisodesFromEpisodesData(seasonService.getSeasons(series, fullAddress))
-                    ));
-                    break;
-                case 7:
-                    displayService.showStats(episodeService.getStats(
-                            episodeService.getEpisodesFromEpisodesData(
-                                    seasonService.getSeasons(series, fullAddress)
-                            ))
-                    );
-                    break;
-                case 8:
-                    displayService.showTotalSeries(seriesService.getTotalSeries());
-                    break;
-                case 9:
-                    displayService.showSeries(new Series(series, userInteraction.getTranslationLanguage()));
-                    break;
-                default:
-                    System.out.println("Invalid chosen option! Please, follow the correct pattern of choice and " +
-                            "try again.");
-                    start();
+            Optional<Series> seriesContainer = seriesService.getSeriesContainer(
+                    totalSeries,
+                    seriesName);
+            if (seriesContainer.isPresent()) {
+                series = seriesContainer.get();
+                switchOverChosenOption(userInteraction.getChosenOption(), series, fullAddress);
+            } else {
+                series = seriesService.getSeriesByName(seriesName);
+                switchOverChosenOption(userInteraction.getChosenOption(), series, fullAddress);
             }
+
             repeat = userInteraction.getRepetitionValue();
         }
     }
+
+    public void switchOverChosenOption(int chosenOption, Series series, String fullAddress) {
+        switch (chosenOption) {
+            case 1:
+                List<SeasonData> seasons = seasonService.getSeasons(series, fullAddress);
+                seriesService.setSeriesEpisodes(series, seasons);
+                displayService.showSeasons(seasons);
+                break;
+            case 2:
+                int seasonNumber = userInteraction.getSeasonNumber();
+
+                List<Episode> episodes = episodeService.getEpisodesNames(seasonNumber, fullAddress);
+                displayService.showEpisodesNames(episodes);
+                break;
+            case 3:
+                displayService.showTopFiveEpisodes(episodeService.getTopFiveEpisodes(seasonService.getSeasons(series,
+                        fullAddress)));
+                break;
+            case 4:
+                displayService.showEpisodesFromYear(episodeService.getEpisodesFromEpisodesData(
+                        seasonService.getSeasons(series, fullAddress)), userInteraction.getSearchYear());
+                break;
+            case 5:
+                displayService.showEpisodeByTitle(
+                        episodeService.getEpisodeByTitle(
+                                episodeService.getEpisodesFromEpisodesData(seasonService.getSeasons(series, fullAddress)),
+                                userInteraction.getEpisodeTitle())
+                );
+                break;
+            case 6:
+                displayService.showRatingsPerSeason(episodeService.getRatingsPerSeason(
+                        episodeService.getEpisodesFromEpisodesData(seasonService.getSeasons(series, fullAddress))
+                ));
+                break;
+            case 7:
+                displayService.showStats(episodeService.getStats(
+                        episodeService.getEpisodesFromEpisodesData(
+                                seasonService.getSeasons(series, fullAddress)
+                        ))
+                );
+                break;
+            case 8:
+                displayService.showTotalSeries(seriesService.getTotalSeries());
+                break;
+            case 9:
+                displayService.showSeries(new Series(series, userInteraction.getTranslationLanguage()));
+                break;
+            default:
+                System.out.println("Invalid chosen option! Please, follow the correct pattern of choice and " +
+                        "try again.");
+                start();
+        }
+    }
+
 }

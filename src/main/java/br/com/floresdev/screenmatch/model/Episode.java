@@ -13,11 +13,11 @@ public class Episode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private final Number season;
+    private Number season;
 
-    private final String title;
+    private String title;
 
-    private final Integer episodeNumber;
+    private Integer episodeNumber;
 
     private Double rating;
 
@@ -25,6 +25,9 @@ public class Episode {
 
     @ManyToOne
     private Series series;
+
+    public Episode() {
+    }
 
     public Episode(Integer episodeNumber, EpisodeData episode) {
         this.season = episodeNumber;
