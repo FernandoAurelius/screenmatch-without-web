@@ -1,9 +1,17 @@
 package br.com.floresdev.screenmatch.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+@Entity
+@Table(name = "episodes")
 public class Episode {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private final Number season;
 
@@ -14,6 +22,9 @@ public class Episode {
     private Double rating;
 
     private LocalDate releaseDate;
+
+    @ManyToOne
+    private Series series;
 
     public Episode(Integer episodeNumber, EpisodeData episode) {
         this.season = episodeNumber;

@@ -4,6 +4,7 @@ import br.com.floresdev.screenmatch.service.translate.TranslationService;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalDouble;
 
@@ -31,8 +32,8 @@ public class Series {
     private String actors;
     private String posterAddress;
 
-    @Transient
-    private List<Episode> episodes;
+    @OneToMany(mappedBy = "series")
+    private List<Episode> episodes = new ArrayList<>();
 
     @SuppressWarnings("unused")
     public Series() {
