@@ -53,7 +53,7 @@ public class UserInterface {
         }
     }
 
-    public void switchOverChosenOption(int chosenOption, Series series, String fullAddress) {
+    private void switchOverChosenOption(int chosenOption, Series series, String fullAddress) {
         switch (chosenOption) {
             case 1:
                 List<SeasonData> seasons = seasonService.getSeasons(series, fullAddress);
