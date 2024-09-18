@@ -33,7 +33,7 @@ public class Series {
     private String actors;
     private String posterAddress;
 
-    @OneToMany(mappedBy = "series", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "series", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Episode> episodes = new ArrayList<>();
 
     @SuppressWarnings("unused")
@@ -107,6 +107,7 @@ public class Series {
     }
 
     public void setEpisodes(List<Episode> episodes) {
+        episodes.forEach(e -> e.setSeries(this));
         this.episodes = episodes;
     }
 
@@ -122,8 +123,13 @@ public class Series {
                 Rating: %s,
                 Total seasons: %d,
                 Actors: [%s],
-                Poster: (%s)
+                Poster: (%s),
+                Episodes:
+                
+                    %s
+                    
+                    
                 """, title, yearsInActivity, runtime, genre, language, plot, imdbRating, totalSeasons, actors,
-                posterAddress);
+                posterAddress, episodes);
     }
 }

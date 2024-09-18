@@ -3,7 +3,6 @@ package br.com.floresdev.screenmatch.service;
 import br.com.floresdev.screenmatch.model.Episode;
 import br.com.floresdev.screenmatch.model.SeasonData;
 import br.com.floresdev.screenmatch.model.Series;
-import org.aspectj.lang.annotation.After;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -34,7 +33,7 @@ public class DisplayService {
                 You can either choose an available series to search for, or enter the name of the desired series.
                 """);
 
-        showTotalSeries(totalSeries);
+        showSeriesNames(totalSeries);
 
         System.out.println("""
                 After entering the series name, you can choose one of the following options of data to be shown:
@@ -102,5 +101,9 @@ public class DisplayService {
 
     public void showSeries(Series series) {
         System.out.println(series);
+    }
+
+    public void showSeriesNames(List<Series> series) {
+        series.forEach(s -> System.out.println(s.getTitle() + "\n"));
     }
 }

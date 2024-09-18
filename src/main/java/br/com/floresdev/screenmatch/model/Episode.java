@@ -65,14 +65,23 @@ public class Episode {
         return episodeNumber;
     }
 
+    public void setSeries(Series series) {
+        this.series = series;
+    }
+
     @Override
     public String toString() {
         return String.format("""
-                Episode: "%s",
+               
+               
+               *-*- EPISODE TITLE: %S
                 Season: %s,
                 Number: %d,
                 Release date: %s,
                 Rating: %s.
+                -*-*-*-*-*-*-*-*-*-*-*
+                
+                
                 """, title, season, episodeNumber, releaseDate, rating);
     }
 }
