@@ -57,7 +57,7 @@ public class UserInterface {
         switch (chosenOption) {
             case 1:
                 List<SeasonData> seasons = seasonService.getSeasons(series, fullAddress);
-                seriesService.setSeriesEpisodes(series, seasons);
+                seriesService.setSeriesEpisodes(series, episodeService.getEpisodesFromEpisodesData(seasons));
                 displayService.showSeasons(seasons);
                 break;
             case 2:

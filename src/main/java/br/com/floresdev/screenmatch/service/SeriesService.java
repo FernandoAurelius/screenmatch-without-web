@@ -43,11 +43,8 @@ public class SeriesService {
                 .findFirst();
     }
 
-    public void setSeriesEpisodes(Series series, List<SeasonData> seasons) {
-        series.setEpisodes(seasons.stream()
-                .flatMap(d -> d.episodes().stream()
-                        .map(e -> new Episode(d.number(), e)))
-                .collect(Collectors.toList()));
+    public void setSeriesEpisodes(Series series, List<Episode> episodes) {
+        series.setEpisodes(episodes);
         repository.save(series);
     }
 
