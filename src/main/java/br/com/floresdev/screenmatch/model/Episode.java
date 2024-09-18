@@ -13,7 +13,7 @@ public class Episode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Number season;
+    private Integer season;
 
     private String title;
 

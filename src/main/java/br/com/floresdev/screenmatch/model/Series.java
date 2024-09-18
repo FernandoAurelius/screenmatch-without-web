@@ -3,6 +3,7 @@ package br.com.floresdev.screenmatch.model;
 import br.com.floresdev.screenmatch.service.translate.TranslationService;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class Series {
     private String actors;
     private String posterAddress;
 
-    @OneToMany(mappedBy = "series")
+    @OneToMany(mappedBy = "series", cascade = CascadeType.ALL)
     private List<Episode> episodes = new ArrayList<>();
 
     @SuppressWarnings("unused")
