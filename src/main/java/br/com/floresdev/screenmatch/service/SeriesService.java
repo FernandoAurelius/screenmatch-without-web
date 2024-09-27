@@ -1,5 +1,7 @@
 package br.com.floresdev.screenmatch.service;
 
+import br.com.floresdev.screenmatch.application.UserInteraction;
+import br.com.floresdev.screenmatch.model.Category;
 import br.com.floresdev.screenmatch.model.Episode;
 import br.com.floresdev.screenmatch.model.SeriesData;
 import br.com.floresdev.screenmatch.model.Series;
@@ -50,6 +52,15 @@ public class SeriesService {
 
     public List<Series> getTopFiveSeries() {
         return repository.findTop5ByOrderByImdbRatingDesc();
+    }
+
+    public List<Series> getSeriesByCategory(String genre) {
+        try {
+            return repository.findByGenre(Category.fromString(genre));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid category! Please, try again.");
+            return getSeriesByCategory(genre);
+        }
     }
 
 }

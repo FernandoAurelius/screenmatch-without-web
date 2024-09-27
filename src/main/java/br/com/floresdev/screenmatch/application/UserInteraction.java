@@ -76,4 +76,10 @@ public class UserInteraction {
         System.out.print("Enter the actor/actress name you want to search for: ");
         return SC.nextLine();
     }
+
+    public String getCategory() {
+        System.out.print("Enter the genre you want to search for (action, adventure, drama, comedy or crime): ");
+        return SC.nextLine();
+    }
+
 }

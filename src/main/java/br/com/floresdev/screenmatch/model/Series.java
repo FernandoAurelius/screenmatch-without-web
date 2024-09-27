@@ -3,7 +3,6 @@ package br.com.floresdev.screenmatch.model;
 import br.com.floresdev.screenmatch.service.translate.TranslationService;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,8 +126,6 @@ public class Series {
                 Episodes:
                 
                     %s
-                    
-                    
                 """, title, yearsInActivity, runtime, genre, language, plot, imdbRating, totalSeasons, actors,
                 posterAddress, episodes);
     }

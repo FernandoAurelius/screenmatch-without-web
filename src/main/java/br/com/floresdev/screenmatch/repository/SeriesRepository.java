@@ -1,5 +1,6 @@
 package br.com.floresdev.screenmatch.repository;
 
+import br.com.floresdev.screenmatch.model.Category;
 import br.com.floresdev.screenmatch.model.Series;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,5 +14,7 @@ public interface SeriesRepository extends JpaRepository<Series, Long> {
     List<Series> findByActorsContainingIgnoreCase(String actor);
 
     List<Series> findTop5ByOrderByImdbRatingDesc();
+
+    List<Series> findByGenre(Category category);
 
 }
