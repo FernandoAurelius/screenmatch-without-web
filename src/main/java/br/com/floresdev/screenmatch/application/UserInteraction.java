@@ -71,4 +71,9 @@ public class UserInteraction {
         System.out.print("Enter the desired language to translate the plot following ISO pattern (pt, en, es, etc.): ");
         return SC.next();
     }
+
+    public String getActorName() {
+        System.out.print("Enter the actor/actress name you want to search for: ");
+        return SC.nextLine();
+    }
 }

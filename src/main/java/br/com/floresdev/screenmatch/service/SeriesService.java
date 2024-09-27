@@ -44,4 +44,8 @@ public class SeriesService {
         repository.save(series);
     }
 
+    public List<Series> searchSeriesByActor(String actor) {
+        return repository.findByActorsContainingIgnoreCase(actor);
+    }
+
 }

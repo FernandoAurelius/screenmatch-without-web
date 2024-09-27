@@ -46,7 +46,7 @@ public class DisplayService {
                 7. View general statistics of a certain series
                 8. View total series queried at the moment
                 9. Translate the series plot to a given language
-                
+                10. Search a series by an actor/actress
                 """);
     }
 
@@ -96,6 +96,10 @@ public class DisplayService {
     }
 
     public void showTotalSeries(List<Series> totalSeries) {
+        if (totalSeries.isEmpty()) {
+            System.out.println("No series found!");
+            return;
+        }
         totalSeries.forEach(System.out::println);
     }
 

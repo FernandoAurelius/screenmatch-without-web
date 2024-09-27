@@ -97,6 +97,9 @@ public class UserInterface {
             case 9:
                 displayService.showSeries(new Series(series, userInteraction.getTranslationLanguage()));
                 break;
+            case 10:
+                displayService.showTotalSeries(seriesService.searchSeriesByActor(userInteraction.getActorName()));
+                break;
             default:
                 System.out.println("Invalid chosen option! Please, follow the correct pattern of choice and " +
                         "try again.");
