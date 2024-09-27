@@ -106,6 +106,11 @@ public class UserInterface {
             case 12:
                 displayService.showTotalSeries(seriesService.getSeriesByCategory(userInteraction.getCategory()));
                 break;
+            case 13:
+                displayService.showTotalSeries(seriesService.getSeriesRecommendation(
+                        userInteraction.getNumberOfSeasons(), 8.0)
+                );
+                break;
             default:
                 System.out.println("Invalid chosen option! Please, follow the correct pattern of choice and " +
                         "try again.");

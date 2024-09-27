@@ -82,4 +82,9 @@ public class UserInteraction {
         return SC.nextLine();
     }
 
+    public Integer getNumberOfSeasons() {
+        System.out.print("Enter the maximum number of seasons you want in a series: ");
+        return SC.nextInt();
+    }
+
 }

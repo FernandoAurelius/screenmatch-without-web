@@ -49,6 +49,7 @@ public class DisplayService {
                 10. Search a series by an actor/actress
                 11. View top five series
                 12. Search series by a certain genre
+                13. See our personal recommendation of series for your weekend!
                 """);
     }
 

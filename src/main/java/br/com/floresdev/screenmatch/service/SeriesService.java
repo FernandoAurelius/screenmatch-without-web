@@ -1,6 +1,5 @@
 package br.com.floresdev.screenmatch.service;
 
-import br.com.floresdev.screenmatch.application.UserInteraction;
 import br.com.floresdev.screenmatch.model.Category;
 import br.com.floresdev.screenmatch.model.Episode;
 import br.com.floresdev.screenmatch.model.SeriesData;
@@ -61,6 +60,10 @@ public class SeriesService {
             System.out.println("Invalid category! Please, try again.");
             return getSeriesByCategory(genre);
         }
+    }
+
+    public List<Series> getSeriesRecommendation(Integer seasons, Double rating) {
+        return repository.findByTotalSeasonsLessThanEqualAndImdbRatingGreaterThanEqual(seasons, rating);
     }
 
 }

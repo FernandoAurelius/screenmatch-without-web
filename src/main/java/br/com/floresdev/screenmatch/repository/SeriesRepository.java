@@ -17,4 +17,6 @@ public interface SeriesRepository extends JpaRepository<Series, Long> {
 
     List<Series> findByGenre(Category category);
 
+    List<Series> findByTotalSeasonsLessThanEqualAndImdbRatingGreaterThanEqual(Integer seasons, Double rating);
+
 }
