@@ -1,14 +1,12 @@
 package br.com.floresdev.screenmatch.service;
 
 import br.com.floresdev.screenmatch.model.Episode;
-import br.com.floresdev.screenmatch.model.SeasonData;
 import br.com.floresdev.screenmatch.model.SeriesData;
 import br.com.floresdev.screenmatch.model.Series;
 import br.com.floresdev.screenmatch.repository.SeriesRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class SeriesService {
     private static final String ADDRESS = "https://www.omdbapi.com/?t=";
@@ -37,10 +35,8 @@ public class SeriesService {
         return repository.findAll();
     }
 
-    public Optional<Series> getSeriesContainer(List<Series> totalSeries, String seriesName) {
-        return totalSeries.stream()
-                .filter(s -> s.getTitle().toLowerCase().contains(seriesName.toLowerCase()))
-                .findFirst();
+    public Optional<Series> getSeriesContainer(String seriesName) {
+        return repository.findByTitleContainingIgnoreCase(seriesName);
     }
 
     public void setSeriesEpisodes(Series series, List<Episode> episodes) {

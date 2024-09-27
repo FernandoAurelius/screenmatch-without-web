@@ -38,9 +38,7 @@ public class UserInterface {
             String fullAddress = seriesService.getFullAddress(seriesName);
             Series series;
 
-            Optional<Series> seriesContainer = seriesService.getSeriesContainer(
-                    totalSeries,
-                    seriesName);
+            Optional<Series> seriesContainer = seriesService.getSeriesContainer(seriesName);
             if (seriesContainer.isPresent()) {
                 series = seriesContainer.get();
                 switchOverChosenOption(userInteraction.getChosenOption(), series, fullAddress);
