@@ -48,4 +48,8 @@ public class SeriesService {
         return repository.findByActorsContainingIgnoreCase(actor);
     }
 
+    public List<Series> getTopFiveSeries() {
+        return repository.findTop5ByOrderByImdbRatingDesc();
+    }
+
 }

@@ -47,6 +47,7 @@ public class DisplayService {
                 8. View total series queried at the moment
                 9. Translate the series plot to a given language
                 10. Search a series by an actor/actress
+                11. View top five series
                 """);
     }
 
