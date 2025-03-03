@@ -1,9 +1,14 @@
 package br.com.floresdev.screenmatch.model;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "episodes")
@@ -11,6 +16,7 @@ public class Episode {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SuppressWarnings("unused")
     private Long id;
 
     private Integer season;
@@ -24,6 +30,7 @@ public class Episode {
     private LocalDate releaseDate;
 
     @ManyToOne
+    @SuppressWarnings("unused")
     private Series series;
 
     public Episode() {

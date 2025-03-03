@@ -1,5 +1,7 @@
 package br.com.floresdev.screenmatch;
 
+import java.util.Locale;
+
 import br.com.floresdev.screenmatch.application.UserInteraction;
 import br.com.floresdev.screenmatch.application.UserInterface;
 import br.com.floresdev.screenmatch.repository.SeriesRepository;
@@ -7,6 +9,7 @@ import br.com.floresdev.screenmatch.service.DisplayService;
 import br.com.floresdev.screenmatch.service.EpisodeService;
 import br.com.floresdev.screenmatch.service.SeasonService;
 import br.com.floresdev.screenmatch.service.SeriesService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -24,8 +27,9 @@ public class ScreenMatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
+		Locale.setDefault(Locale.US);
 		final UserInterface UI = new UserInterface(new UserInteraction(), new SeriesService(seriesRepository),
-				new SeasonService(), new EpisodeService(), new DisplayService());
+				new SeasonService(), new EpisodeService(seriesRepository), new DisplayService());
 		UI.start();
 	}
 }

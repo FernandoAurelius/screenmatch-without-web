@@ -1,13 +1,13 @@
 package br.com.floresdev.screenmatch.service;
 
-import br.com.floresdev.screenmatch.model.Category;
-import br.com.floresdev.screenmatch.model.Episode;
-import br.com.floresdev.screenmatch.model.SeriesData;
-import br.com.floresdev.screenmatch.model.Series;
-import br.com.floresdev.screenmatch.repository.SeriesRepository;
-
 import java.util.List;
 import java.util.Optional;
+
+import br.com.floresdev.screenmatch.model.Category;
+import br.com.floresdev.screenmatch.model.Episode;
+import br.com.floresdev.screenmatch.model.Series;
+import br.com.floresdev.screenmatch.model.SeriesData;
+import br.com.floresdev.screenmatch.repository.SeriesRepository;
 
 public class SeriesService {
     private static final String ADDRESS = "https://www.omdbapi.com/?t=";
@@ -63,7 +63,7 @@ public class SeriesService {
     }
 
     public List<Series> getSeriesRecommendation(Integer seasons, Double rating) {
-        return repository.findByTotalSeasonsLessThanEqualAndImdbRatingGreaterThanEqual(seasons, rating);
+        return repository.findSeriesBySeasonsAndRating(seasons, rating);
     }
 
 }

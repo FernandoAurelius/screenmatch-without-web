@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class DisplayService {
 
@@ -62,29 +61,25 @@ public class DisplayService {
     }
 
     public void showTopFiveEpisodes(List<Episode> episodes) {
-        episodes.forEach(d -> System.out.printf("%s, season: [" + d.getSeason() + "]\n", d.getTitle()));
+        episodes.forEach(d -> System.out.printf("%s, rating: [%.1f], season: [" + d.getSeason() + "]\n", d.getTitle(), d.getRating()));
     }
 
-    public void showEpisodesFromYear(List<Episode> episodes, LocalDate searchYear) {
-        episodes.stream()
-                .filter(e -> e.getReleaseDate() != null && e.getReleaseDate().isAfter(searchYear))
-                .forEach(e -> System.out.println(
+    public void showEpisodesFromYear(List<Episode> episodes) {
+        episodes.forEach(e -> System.out.println(
                         "Season: " + e.getSeason()
                         + "\nEpisode number: " + e.getEpisodeNumber()
                         + "\nEpisode title: " + e.getTitle()
                         + "\nRelease date: " + e.getReleaseDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
     }
 
-    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public void showEpisodeByTitle(Optional<Episode> episodeContainer) {
-        if (episodeContainer.isEmpty()) {
-            System.out.println("Episode not found!");
-            return;
-        }
-        System.out.println("First occurrence of the title is: "
-                + episodeContainer.get().getTitle()
-                + ", season: "
-                + episodeContainer.get().getSeason());
+    public void showEpisodeByTitle(List<Episode> episodes) {
+        episodes.forEach(
+            e -> System.out.printf("Season: "
+            + e.getSeason() 
+            + " | Episode: " 
+            + e.getEpisodeNumber() 
+            + " | Title: %s%n", e.getTitle())
+        );
     }
 
     public void showRatingsPerSeason(Map<Number, Double> ratingsPerSeason) {

@@ -1,5 +1,8 @@
 package br.com.floresdev.screenmatch.application;
 
+import java.util.List;
+import java.util.Optional;
+
 import br.com.floresdev.screenmatch.model.Episode;
 import br.com.floresdev.screenmatch.model.SeasonData;
 import br.com.floresdev.screenmatch.model.Series;
@@ -7,9 +10,6 @@ import br.com.floresdev.screenmatch.service.DisplayService;
 import br.com.floresdev.screenmatch.service.EpisodeService;
 import br.com.floresdev.screenmatch.service.SeasonService;
 import br.com.floresdev.screenmatch.service.SeriesService;
-
-import java.util.List;
-import java.util.Optional;
 
 public class UserInterface {
 
@@ -49,72 +49,47 @@ public class UserInterface {
 
             repeat = userInteraction.getRepetitionValue();
         }
+        userInteraction.closeScanner();
     }
 
     private void switchOverChosenOption(int chosenOption, Series series, String fullAddress) {
         switch (chosenOption) {
-            case 1:
+            case 1 -> {
                 List<SeasonData> seasons = seasonService.getSeasons(series, fullAddress);
                 seriesService.setSeriesEpisodes(series, episodeService.getEpisodesFromEpisodesData(seasons));
                 displayService.showSeasons(seasons);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 int seasonNumber = userInteraction.getSeasonNumber();
 
                 List<Episode> episodes = episodeService.getEpisodesNames(seasonNumber, fullAddress);
                 displayService.showEpisodesNames(episodes);
-                break;
-            case 3:
-                displayService.showTopFiveEpisodes(episodeService.getTopFiveEpisodes(seasonService.getSeasons(series,
-                        fullAddress)));
-                break;
-            case 4:
-                displayService.showEpisodesFromYear(episodeService.getEpisodesFromEpisodesData(
-                        seasonService.getSeasons(series, fullAddress)), userInteraction.getSearchYear());
-                break;
-            case 5:
-                displayService.showEpisodeByTitle(
-                        episodeService.getEpisodeByTitle(
-                                episodeService.getEpisodesFromEpisodesData(seasonService.getSeasons(series, fullAddress)),
-                                userInteraction.getEpisodeTitle())
+            }
+            case 3 -> displayService.showTopFiveEpisodes(episodeService.getTopFiveEpisodes(series));
+            case 4 -> displayService.showEpisodesFromYear(episodeService.getEpisodesByYear(userInteraction.getSearchYear()));
+            case 5 -> displayService.showEpisodeByTitle(episodeService.getEpisodeByTitle(userInteraction.getEpisodeTitle())
                 );
-                break;
-            case 6:
-                displayService.showRatingsPerSeason(episodeService.getRatingsPerSeason(
+            case 6 -> displayService.showRatingsPerSeason(episodeService.getRatingsPerSeason(
                         episodeService.getEpisodesFromEpisodesData(seasonService.getSeasons(series, fullAddress))
                 ));
-                break;
-            case 7:
-                displayService.showStats(episodeService.getStats(
+            case 7 -> displayService.showStats(episodeService.getStats(
                         episodeService.getEpisodesFromEpisodesData(
                                 seasonService.getSeasons(series, fullAddress)
                         ))
                 );
-                break;
-            case 8:
-                displayService.showTotalSeries(seriesService.getTotalSeries());
-                break;
-            case 9:
-                displayService.showSeries(new Series(series, userInteraction.getTranslationLanguage()));
-                break;
-            case 10:
-                displayService.showTotalSeries(seriesService.searchSeriesByActor(userInteraction.getActorName()));
-                break;
-            case 11:
-                displayService.showTotalSeries(seriesService.getTopFiveSeries());
-                break;
-            case 12:
-                displayService.showTotalSeries(seriesService.getSeriesByCategory(userInteraction.getCategory()));
-                break;
-            case 13:
-                displayService.showTotalSeries(seriesService.getSeriesRecommendation(
-                        userInteraction.getNumberOfSeasons(), 8.0)
+            case 8 -> displayService.showTotalSeries(seriesService.getTotalSeries());
+            case 9 -> displayService.showSeries(new Series(series, userInteraction.getTranslationLanguage()));
+            case 10 -> displayService.showTotalSeries(seriesService.searchSeriesByActor(userInteraction.getActorName()));
+            case 11 -> displayService.showTotalSeries(seriesService.getTopFiveSeries());
+            case 12 -> displayService.showTotalSeries(seriesService.getSeriesByCategory(userInteraction.getCategory()));
+            case 13 -> displayService.showTotalSeries(seriesService.getSeriesRecommendation(
+                        userInteraction.getNumberOfSeasons(), userInteraction.getSeriesRating())
                 );
-                break;
-            default:
+            default -> {
                 System.out.println("Invalid chosen option! Please, follow the correct pattern of choice and " +
                         "try again.");
                 start();
+            }
         }
     }
 

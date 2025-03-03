@@ -26,38 +26,43 @@ public class UserInteraction {
             getNextLine();
             System.out.println("Invalid format inputted! Please, enter your choice again, following " +
                     "the correct pattern!");
-            getChosenOption();
+            return getChosenOption();
         }
-        return 0;
     }
 
     public int getSeasonNumber() { // UserInteraction
         try {
             System.out.print("Enter the season number, please: ");
-            return SC.nextInt();
+            int seasonNumber = SC.nextInt();
+            getNextLine(); // Clear buffer after reading int
+            return seasonNumber;
         } catch (InputMismatchException e) {
+            getNextLine(); // Clear buffer after exception
             System.out.println("Invalid format inputted! Please, enter your choice again, following " +
                     "the correct pattern!");
-            getSeasonNumber();
+            return getSeasonNumber();
         }
-        return 0;
     }
 
     public LocalDate getSearchYear() { // UserInteraction
         System.out.print("What year do you want to view the episodes from? ");
         try {
-            return LocalDate.of(SC.nextInt(), 1, 1);
+            int year = SC.nextInt();
+            getNextLine(); // Clear buffer after reading int
+            return LocalDate.of(year, 1, 1);
         } catch (InputMismatchException e) {
+            getNextLine(); // Clear buffer after exception
             System.out.println("Invalid format inputted! Please, enter your choice again, following " +
                     "the correct pattern!");
-            getSearchYear();
+            return getSearchYear();
         }
-        return null;
     }
 
     public String getEpisodeTitle() {
         System.out.print("Enter the episode title you want to look for: ");
-        return SC.nextLine();
+        String title = SC.nextLine();
+        System.out.println("Searching for episode with title: " + title);
+        return title;
     }
 
     public String getRepetitionValue() {
@@ -69,7 +74,9 @@ public class UserInteraction {
 
     public String getTranslationLanguage() {
         System.out.print("Enter the desired language to translate the plot following ISO pattern (pt, en, es, etc.): ");
-        return SC.next();
+        String language = SC.next();
+        getNextLine(); // Clear buffer after reading next
+        return language;
     }
 
     public String getActorName() {
@@ -84,7 +91,34 @@ public class UserInteraction {
 
     public Integer getNumberOfSeasons() {
         System.out.print("Enter the maximum number of seasons you want in a series: ");
-        return SC.nextInt();
+        try {
+            int seasons = SC.nextInt();
+            getNextLine(); // Clear buffer after reading int
+            return seasons;
+        } catch (InputMismatchException e) {
+            getNextLine(); // Clear buffer after exception
+            System.out.println("Invalid format inputted! Please, enter your choice again, following " +
+                    "the correct pattern!");
+            return getNumberOfSeasons();
+        }
+    }
+
+    public Double getSeriesRating() {
+        System.out.print("Enter the minimum rating you want to see in a series: ");
+        try {
+            double rating = SC.nextDouble();
+            getNextLine(); // Clear buffer after reading double
+            return rating;
+        } catch (InputMismatchException e) {
+            getNextLine(); // Clear buffer after exception
+            System.out.println("Invalid format inputted! Please, enter your choice again, following " +
+                    "the correct pattern!");
+            return getSeriesRating();
+        }
+    }
+
+    public void closeScanner() {
+        SC.close();
     }
 
 }
